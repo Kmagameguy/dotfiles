@@ -1,14 +1,42 @@
 #!/bin/bash
 
 copy_dotfiles() {
+echo "$(pwd)"
   for file in ./*; do
-    cp "${file}" "~/.${file}"
+    cp "${file}" "${HOME}/${file}"
   done
+}
+
+install_software_properties() {
+  sudo apt install software-properties-common -y
+}
+
+add_vscodium_key() {
+  wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo apt-key add -
+}
+
+add_vscodium_ppa() {
+  if ! command -v add-apt-repository &> /dev/null; then
+    install_software_properties
+  fi
+  add_vscodium_key
+  sudo apt-add-repository 'deb [ signed-by=/etc/apt/trusted.gpg.d/vscodium-archive-keyring.gpg ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main'
+}
+
+install_vscodium_and_extensions() {
+  if ! command -v codium $> /dev/null; then
+    add_vscodium_ppa
+    sudo apt update
+    sudo apt install codium
+  fi
+
+  /bin/bash ../script/vscode-extensions.sh
 }
 
 main() {
   cd "$(dirname "$0")/../dotfiles/" || exit
   copy_dotfiles
+  install_vscodium_and_extensions
 }
 
 main "${@}"
