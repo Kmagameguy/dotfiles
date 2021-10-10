@@ -1,0 +1,14 @@
+#!/bin/bash
+
+copy_dotfiles() {
+  for file in ./*; do
+    cp "${file}" "~/.${file}"
+  done
+}
+
+main() {
+  cd "$(dirname "$0")/../dotfiles/" || exit
+  copy_dotfiles
+}
+
+main "${@}"
