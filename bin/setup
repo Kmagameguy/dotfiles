@@ -1,7 +1,7 @@
 #!/bin/bash
 
 copy_dotfiles() {
-echo "$(pwd)"
+  shopt -s dotglob
   for file in ./*; do
     cp "${file}" "${HOME}/${file}"
   done
