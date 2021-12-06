@@ -2,9 +2,13 @@
 
 copy_dotfiles() {
   shopt -s dotglob
-  for file in ./*; do
+  cd ./dotfiles || exit
+
+  for file in *; do
     cp "${file}" "${HOME}/${file}"
   done
+
+  cd .. || exit
 }
 
 install_software_properties() {
@@ -30,13 +34,30 @@ install_vscodium_and_extensions() {
     sudo apt install codium
   fi
 
-  /bin/bash ../script/vscode-extensions.sh
+  ./script/vscode-extensions.sh
+}
+
+setup_crontab() {
+  local cron_script_path="$HOME/scripts/"
+  mkdir -p "${cron_script_path}"
+
+  # Deploy pre-requisite crontab sripts
+  for script in ./cron/util/*; do
+    cp "${script}" "${cron_script_path}"
+  done
+
+  # Import crontab entries and make sure script targets point to current user's home folder
+  cp ./cron/crontab/user_crontab.txt /tmp/
+  sed -i "s/placeholder_uname/$(whoami)/" /tmp/user_crontab.txt
+
+  crontab /tmp/user_crontab.txt
 }
 
 main() {
-  cd "$(dirname "$0")/../dotfiles/" || exit
+  cd "$(dirname "$0")/.." || exit
   copy_dotfiles
   install_vscodium_and_extensions
+  setup_crontab
 }
 
 main "${@}"
