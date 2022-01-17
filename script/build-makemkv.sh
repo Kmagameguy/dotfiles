@@ -48,6 +48,15 @@ curl -LO "${FFMPEG_URL}" && \
   ./configure --prefix=/tmp/ffmpeg --enable-static --disable-shared --enable-pic --enable-libfdk-aac && \
   sudo make install
 
+# Clean up FFMPEG leftovers
+if [ -f "${FFMPEG_FILENAME}.tar.xz" ]; then
+  rm "${FFMPEG_FILENAME}.tar.xz"
+fi
+
+if [ -d "${FFMPEG_FILENAME}" ]; then
+  sudo rm -rf "${FFMPEG_FILENAME}"
+fi
+
 return_to_script_dir
 
 # Build the MakeMKV frontend/GUI app
