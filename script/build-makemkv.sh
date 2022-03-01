@@ -4,11 +4,11 @@ return_to_script_dir() {
   cd "$(dirname "$0")" || exit
 }
 
-FFMPEG_VERSION="4.4.1"
+FFMPEG_VERSION="5.0"
 FFMPEG_FILENAME="ffmpeg-${FFMPEG_VERSION}"
 FFMPEG_URL="https://ffmpeg.org/releases/${FFMPEG_FILENAME}.tar.xz"
 
-MAKEMKV_VERSION="1.16.5"
+MAKEMKV_VERSION="1.16.7"
 MAKEMKV_OSS_FILENAME="makemkv-oss-${MAKEMKV_VERSION}"
 MAKEMKV_OSS_URL="https://www.makemkv.com/download/${MAKEMKV_OSS_FILENAME}.tar.gz"
 
