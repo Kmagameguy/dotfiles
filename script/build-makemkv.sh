@@ -4,7 +4,7 @@ return_to_script_dir() {
   cd "$(dirname "$0")" || exit
 }
 
-FFMPEG_VERSION="5.0"
+FFMPEG_VERSION="5.0.1"
 FFMPEG_FILENAME="ffmpeg-${FFMPEG_VERSION}"
 FFMPEG_URL="https://ffmpeg.org/releases/${FFMPEG_FILENAME}.tar.xz"
 
