@@ -1,0 +1,20 @@
+[alias]
+  slog = log --pretty=oneline -n 20 --graph --abbrev-commit
+  amend = commit --amend --reuse-message=HEAD
+  contributors = shortlog --summary --numbered
+
+[branch]
+  sort = -committerdate
+
+[commit]
+  gpgsign = true
+
+[core]
+  excludesfile = ~/.gitignore_global
+  editor = nano
+
+[init]
+  defaultBranch = main
+
+[user]
+  name = Kevin

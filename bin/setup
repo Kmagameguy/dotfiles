@@ -1,0 +1,70 @@
+#!/bin/bash
+
+copy_dotfiles() {
+  shopt -s dotglob
+  cd ./dotfiles || exit
+
+  for file in *; do
+    cp "${file}" "${HOME}/${file}"
+  done
+
+  cd .. || exit
+}
+
+install_software_properties() {
+  sudo apt install software-properties-common -y
+}
+
+add_vscodium_key() {
+  wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo apt-key add -
+}
+
+add_vscodium_ppa() {
+  if ! command -v add-apt-repository &> /dev/null; then
+    install_software_properties
+  fi
+  add_vscodium_key
+  sudo apt-add-repository 'deb [ signed-by=/etc/apt/trusted.gpg.d/vscodium-archive-keyring.gpg ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main'
+}
+
+install_vscodium_and_extensions() {
+  if ! command -v codium $> /dev/null; then
+    add_vscodium_ppa
+    sudo apt update
+    sudo apt install codium
+  fi
+
+  ./script/vscode-extensions.sh
+}
+
+setup_crontab() {
+  local cron_script_path="$HOME/scripts/"
+  mkdir -p "${cron_script_path}"
+
+  # Deploy pre-requisite crontab sripts
+  for script in ./cron/util/*; do
+    cp "${script}" "${cron_script_path}"
+  done
+
+  # Import crontab entries and make sure script targets point to current user's home folder
+  cp ./cron/crontab/user_crontab.txt /tmp/
+  sed -i "s/placeholder_uname/$(whoami)/" /tmp/user_crontab.txt
+
+  crontab /tmp/user_crontab.txt
+}
+
+install_application_entries() {
+  for file in ./desktop_files/*; do
+    sudo cp "${file}" /usr/local/share/applications
+  done
+}
+
+main() {
+  cd "$(dirname "$0")/.." || exit
+  copy_dotfiles
+  install_vscodium_and_extensions
+  setup_crontab
+  install_application_entries
+}
+
+main "${@}"
