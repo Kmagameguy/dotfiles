@@ -1,0 +1,10 @@
+---
+
+- name: Configure host.
+  hosts: all
+
+  vars_files:
+    - default.config.yml
+
+  tasks:
+    - import_tasks: tasks/linux.yml
