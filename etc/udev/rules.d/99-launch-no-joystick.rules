@@ -1,1 +1,2 @@
+# (kernel bug workaround) Prevent System76 LAUNCH Keyboard from being detected as a joystick on Linux Kernel 6.16+
 SUBSYSTEM=="input", ATTRS{idVendor}=="3384", ATTRS{idProduct}=="0001", ENV{ID_INPUT_JOYSTICK}=""
