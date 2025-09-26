@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# TODO: Replace VSCodium with VSCode for devcontainer support
+# TODO: Detect OS type (RHEL-based vs Debian-based)
+
 copy_dotfiles() {
   shopt -s dotglob
   cd ./dotfiles || exit
@@ -27,14 +30,20 @@ add_vscodium_ppa() {
   sudo apt-add-repository 'deb [ signed-by=/etc/apt/trusted.gpg.d/vscodium-archive-keyring.gpg ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main'
 }
 
-install_vscodium_and_extensions() {
+install_vscodium() {
   if ! command -v codium $> /dev/null; then
     add_vscodium_ppa
     sudo apt update
     sudo apt install codium
   fi
+}
 
-  ./script/vscode-extensions.sh
+install_ide_extensions() {
+  if command -v codium $> /dev/null; then
+    ./script/vscode-extensions.sh
+  else
+    echo "VSCode not installed.  Skipping extension installation."
+  fi
 }
 
 setup_crontab() {
@@ -62,7 +71,8 @@ install_application_entries() {
 main() {
   cd "$(dirname "$0")/.." || exit
   copy_dotfiles
-  install_vscodium_and_extensions
+  install_vscodium
+  install_ide_extensions
   setup_crontab
   install_application_entries
 }
