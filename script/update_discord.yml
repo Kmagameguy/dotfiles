@@ -1,0 +1,54 @@
+---
+- name: Download or Update Discord on Linux
+  hosts: localhost
+  become: yes
+  vars:
+    target_user: ""
+  tasks:
+    - name: Download Discord Tarball
+      get_url:
+        url: "https://discord.com/api/download?platform=linux&format=tar.gz"
+        dest: "/tmp/discord.tar.gz"
+
+    - name: Extract the tarball
+      ansible.builtin.unarchive:
+        src: "/tmp/discord.tar.gz"
+        dest: "/tmp/"
+        remote_src: yes
+
+    - name: Copy the extracted Discord directory to /opt
+      ansible.builtin.copy:
+        src: "/tmp/Discord"
+        dest: "/opt/"
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
+        mode: "0755"
+
+    - name: Ensure desktop entry is created
+      ansible.builtin.copy:
+        dest: "/home/{{ target_user }}/.local/share/applications/Discord.desktop"
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
+        mode: "600"
+        content: |
+          [Desktop Entry]
+          Comment=
+          Exec=/opt/Discord/Discord
+          Icon=/opt/Discord/discord.png
+          Name=Discord
+          NoDisplay=false
+          Path=
+          StartupNotify=true
+          Terminal=false
+          TerminalOptions=
+          Type=Application
+          X-KDE-SubstituteUID=false
+          X-KDE-Username=
+
+    - name: Remove temporary files
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "/tmp/discord.tar.gz"
+        - "/tmp/Discord"
