@@ -64,7 +64,7 @@ setup_crontab() {
 
 install_application_entries() {
   for file in ./desktop_files/*; do
-    sudo cp "${file}" /usr/local/share/applications
+    sudo cp "${file}" "${HOME}/.local/share/applications/"
   done
 }
 
