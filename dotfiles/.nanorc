@@ -4,6 +4,7 @@ set linenumbers
 set casesensitive
 set indicator
 set minibar
+set guidestripe 80
 
 # Syntax-Highlighting
 ## CSS
