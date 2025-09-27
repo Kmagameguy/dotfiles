@@ -1,0 +1,49 @@
+set tabstospaces
+set constantshow
+set linenumbers
+set casesensitive
+set indicator
+set minibar
+
+# Syntax-Highlighting
+## CSS
+include "/usr/share/nano/css.nanorc"
+
+## HTML
+include "/usr/share/nano/html.nanorc"
+
+## Javascript
+include "/usr/share/nano/javascript.nanorc"
+
+## JSON
+include "/usr/share/nano/json.nanorc"
+
+## Patch
+include "/usr/share/nano/patch.nanorc"
+
+## Makefile
+include "/usr/share/nano/makefile.nanorc"
+
+## Manpage
+include "/usr/share/nano/man.nanorc"
+
+## Markdown
+include "/usr/share/nano/markdown.nanorc"
+
+## .Nanorc
+include "/usr/share/nano/nanorc.nanorc"
+
+## Ruby
+include "/usr/share/nano/ruby.nanorc"
+
+## Shell Scripts
+include "/usr/share/nano/sh.nanorc"
+
+## SQL
+include "/usr/share/nano/sql.nanorc"
+
+## XML
+include "/usr/share/nano/xml.nanorc"
+
+## YAML
+include "/usr/share/nano/yaml.nanorc"
