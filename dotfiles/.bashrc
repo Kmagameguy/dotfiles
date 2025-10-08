@@ -44,6 +44,10 @@ if ! shopt -oq posix; then
     fi
 fi
 
+if [ -d "${HOME}/.rbenv" ]; then
+  eval "$(${HOME}/.rbenv/bin/rbenv init -)"
+fi
+
 if [ -d "/opt/steamtinkerlaunch" ]; then
   export PATH="/opt/steamtinkerlaunch:$PATH"
 fi
