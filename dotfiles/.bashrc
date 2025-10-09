@@ -45,9 +45,20 @@ if ! shopt -oq posix; then
 fi
 
 if [ -d "${HOME}/.rbenv" ]; then
+  export PATH=$HOME/.rbenv/bin:$PATH
   eval "$(${HOME}/.rbenv/bin/rbenv init -)"
+fi
+
+if [ -d "${HOME}/.nvm" ]; then
+  export NVM_DIR="${HOME}/.nvm"
+  [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh" # this loads nvm
+  [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion" # this loads nvm bash_completion
 fi
 
 if [ -d "/opt/steamtinkerlaunch" ]; then
   export PATH="/opt/steamtinkerlaunch:$PATH"
+fi
+
+if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ]; then
+  export GPG_TTY=$(tty)
 fi
