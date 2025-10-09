@@ -11,6 +11,7 @@ declare -a packages=(
  'ms-vscode-remote.remote-explorer'
  'ms-vscode-remote.remote-ssh'
  'ms-vscode-remote.remote-ssh-edit'
+ 'yzane.markdown-pdf'
 )
 
 for extension in "${packages[@]}"; do
