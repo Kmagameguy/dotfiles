@@ -17,4 +17,6 @@
   defaultBranch = main
 
 [user]
-  name = Kevin
+  name = <edit this value>
+  email = <edit this value>
+  signingkey = <edit this value>
