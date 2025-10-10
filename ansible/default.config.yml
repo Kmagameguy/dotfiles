@@ -9,6 +9,7 @@ dotfiles_files:
   - .bash_aliases
   - .bash_profile
   - .bashrc
+  - .gemrc
   - .gitconfig
   - .gitignore_global
   - .inputrc
