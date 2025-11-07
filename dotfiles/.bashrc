@@ -62,3 +62,7 @@ fi
 if [ "$XDG_CURRENT_DESKTOP" == "GNOME" ]; then
   export GPG_TTY=$(tty)
 fi
+
+if command -v starship &> /dev/null; then
+  eval "$(starship init bash)"
+fi
